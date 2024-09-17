@@ -33,6 +33,7 @@ export function Home() {
   })
 
   function handleCreateNewCycle(data: NewCycleFormData){
+    console.log(data)
     reset();
   }
   
@@ -64,7 +65,8 @@ export function Home() {
             placeholder="00"
             step={5}
             type="number"
-          
+            min={5}
+            max={60}
             {...register('minutesAmount', {valueAsNumber: true})}
           />
 
