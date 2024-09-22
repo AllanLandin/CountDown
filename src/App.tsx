@@ -2,14 +2,17 @@ import { ThemeProvider } from "styled-components";
 import { defaultTheme } from "./styles/themes/default";
 import { GlobalStyle } from "./styles/themes/Gloobal.styles";
 import { BrowserRouter } from "react-router-dom";
-import { Router } from "./components/Router";
+import { Router } from "./Router";
+import { CycleContextProvider } from "./contexts/cycleContext";
 
 export function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <BrowserRouter>
-        <Router />
-      </BrowserRouter>
+      <CycleContextProvider>
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
+      </CycleContextProvider>
       <GlobalStyle />
     </ThemeProvider>
   );
