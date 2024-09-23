@@ -7,22 +7,17 @@ import {
   StopBtn,
   TaskInput,
 } from "./styles";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { cycleContext } from "../../contexts/cycleContext";
 import { CountDown } from "../CountDown";
 import { useFormContext } from "react-hook-form";
 
 export function NewCycleForm() {
-  const { activeCycle, interruptCurrentCycle, markCurrentCycleAsFinished } =
-    useContext(cycleContext);
+  const { activeCycle, interruptCurrentCycle } = useContext(cycleContext);
   const { watch, register } = useFormContext();
 
   const task = watch("task");
   let isSubmitDisabled = !task;
-
-  useEffect(() => {
-    markCurrentCycleAsFinished();
-  }, [activeCycle]);
 
   return (
     <FormContainer>
@@ -47,7 +42,7 @@ export function NewCycleForm() {
           placeholder="00"
           step={5}
           type="number"
-          min={5}
+          min={1}
           max={60}
           {...register("minutesAmount", { valueAsNumber: true })}
           disabled={!!activeCycle}

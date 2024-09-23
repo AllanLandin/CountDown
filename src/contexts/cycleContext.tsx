@@ -1,4 +1,3 @@
-import { differenceInSeconds } from "date-fns";
 import { createContext, useState } from "react";
 import { ReactNode } from "react";
 
@@ -24,6 +23,7 @@ interface ICycleContext {
   interruptCurrentCycle: () => void;
   createNewCycle: (data: ICreateNewCycleData) => void;
   markCurrentCycleAsFinished: () => void;
+  setSecondsPassed: (seconds: number) => void;
 }
 
 interface ICreateNewCycleData {
@@ -56,7 +56,6 @@ export function CycleContextProvider({ children }: ICycleContextProvProps) {
   }
 
   function createNewCycle(data: ICreateNewCycleData) {
-    setAmountSecondsPassed(0);
     const id = String(new Date().getTime());
     const newCycle: Cycle = {
       id,
@@ -66,39 +65,23 @@ export function CycleContextProvider({ children }: ICycleContextProvProps) {
     };
     setCycles((state) => [...state, newCycle]);
     setActiveCycleID(id);
+    setAmountSecondsPassed(0);
   }
 
   function markCurrentCycleAsFinished() {
-    let interval: number;
-    if (activeCycle) {
-      interval = setInterval(() => {
-        const secondsDiffFromStart = differenceInSeconds(
-          new Date(),
-          activeCycle.startDate
-        );
-
-        if (secondsDiffFromStart >= totalSeconds) {
-          setCycles((state) =>
-            state.map((cycle) => {
-              if (cycle.id === activeCycleID) {
-                return { ...cycle, finishedDate: new Date() };
-              } else {
-                return { ...cycle };
-              }
-            })
-          );
-          setActiveCycleID("");
-          clearInterval(interval);
-          setAmountSecondsPassed(totalSeconds);
+    setCycles((state) =>
+      state.map((cycle) => {
+        if (cycle.id === activeCycleID) {
+          return { ...cycle, finishedDate: new Date() };
         } else {
-          setAmountSecondsPassed(secondsDiffFromStart);
+          return { ...cycle };
         }
-      }, 1000);
-    }
+      })
+    );
+  }
 
-    return () => {
-      clearInterval(interval);
-    };
+  function setSecondsPassed(seconds: number) {
+    setAmountSecondsPassed(seconds);
   }
 
   return (
@@ -112,6 +95,7 @@ export function CycleContextProvider({ children }: ICycleContextProvProps) {
         interruptCurrentCycle,
         createNewCycle,
         markCurrentCycleAsFinished,
+        setSecondsPassed,
       }}
     >
       {children}
