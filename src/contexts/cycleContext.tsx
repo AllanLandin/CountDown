@@ -78,6 +78,7 @@ export function CycleContextProvider({ children }: ICycleContextProvProps) {
         }
       })
     );
+    setActiveCycleID("");
   }
 
   function setSecondsPassed(seconds: number) {
