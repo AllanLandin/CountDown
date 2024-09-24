@@ -40,7 +40,7 @@ export const HistoryList = styled.div`
   }
 `;
 
-const STATUSCOLORS = {
+export const STATUSCOLORS = {
   yellow: "yellow-500",
   green: "green-500",
   red: "red-500",
@@ -51,12 +51,9 @@ interface IStatusProps {
 }
 
 export const Status = styled.td<IStatusProps>`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: blue;
-
   &::before {
+    display: inline-block;
+    margin-right: 0.5rem;
     content: "";
     width: 0.5rem;
     height: 0.5rem;
