@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { cycleContext } from "../../contexts/cycleContext";
 
 export function CountDown() {
-  const { amountSecondsPassed, activeCycle, totalSeconds } =
+  const { activeCycle, totalSeconds, amountSecondsPassed } =
     useContext(cycleContext);
 
   const currentSeconds = activeCycle ? totalSeconds - amountSecondsPassed : 0;
@@ -15,6 +15,8 @@ export function CountDown() {
   const seconds = String(currentAmountRestSeconds).padStart(2, "0");
 
   useEffect(() => {
+    document.title = "Coundown";
+
     if (activeCycle) {
       document.title = `${minutes}:${seconds}`;
     }

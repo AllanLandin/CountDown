@@ -21,6 +21,7 @@ interface ICycleContext {
   activeCycleID: string | undefined;
   amountSecondsPassed: number;
   totalSeconds: number;
+
   interruptCurrentCycle: () => void;
   createNewCycle: (data: ICreateNewCycleData) => void;
   markCurrentCycleAsFinished: () => void;
@@ -109,6 +110,7 @@ export function CycleContextProvider({ children }: ICycleContextProvProps) {
         amountSecondsPassed,
         activeCycleID,
         totalSeconds,
+
         interruptCurrentCycle,
         createNewCycle,
         markCurrentCycleAsFinished,
